@@ -14,11 +14,13 @@ class SaleAgentPlan(models.Model):
 
     @api.multi
     def get_product_commission(self, product=False):
-        commission_line = self.lines.filtered(
-            lambda r: r.product.id == product)
+        commission_line = False
+        if product:
+            commission_line = self.env['sale.agent.plan.line'].search(
+                [('product', '=', product), ('plan', '=', self.id)])
         if not commission_line:
-            commission_line = self.lines.filtered(
-                lambda r: r.product.id is False)
+            commission_line = self.env['sale.agent.plan.line'].search(
+                [('product', '=', False), ('plan', '=', self.id)])
         return commission_line.commission
 
     @api.multi
