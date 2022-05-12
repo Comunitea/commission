@@ -79,6 +79,7 @@ class SaleCommissionMakeSettle(models.TransientModel):
             # Get non settled invoices
             agent_lines = self._get_agent_lines(
                 agent, date_to_agent)
+
             for company in agent_lines.mapped('company_id'):
                 agent_lines_company = agent_lines.filtered(
                     lambda r: r.object_id.company_id == company)
@@ -121,10 +122,11 @@ class SaleCommissionMakeSettle(models.TransientModel):
         else:
             return {'type': 'ir.actions.act_window_close'}
 
+
     def _get_agent_lines(self, agent, date_to_agent):
         limit_date = date(year=2023, month=12, day=31)
         return self.env['account.invoice.line.agent'].search([
             ('invoice_date', '<', date_to_agent),
             ('invoice_date', '>' , limit_date),
             ('agent', '=', agent.id),
-            ('settled', '=', False)], order="invoice_date")
+            ('settled', '=', False)], order='invoice_date')
