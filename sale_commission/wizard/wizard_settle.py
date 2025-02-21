@@ -79,7 +79,6 @@ class SaleCommissionMakeSettle(models.TransientModel):
             # Get non settled invoices
             agent_lines = self._get_agent_lines(
                 agent, date_to_agent)
-
             for company in agent_lines.mapped('company_id'):
                 agent_lines_company = agent_lines.filtered(
                     lambda r: r.object_id.company_id == company)
