@@ -123,7 +123,7 @@ class SaleCommissionMakeSettle(models.TransientModel):
 
 
     def _get_agent_lines(self, agent, date_to_agent):
-        limit_date = date(year=2023, month=12, day=31)
+        limit_date = date(year=2024, month=12, day=31)
         return self.env['account.invoice.line.agent'].search([
             ('invoice_date', '<', date_to_agent),
             ('invoice_date', '>' , limit_date),
